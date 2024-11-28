@@ -1,34 +1,48 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "ODIN by Cyble Documentation",
+  "primaryTab": {
+    "name": "Getting Started"
+  },
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
+  "openapi": "/openapi.yaml",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#9563FF",
+    "light": "#6366f1",
+    "dark": "#0D001D",
+    "background": {
+      "dark": "#09090b"
+    },
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#FF7F57",
+      "to": "#9563FF"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
+  "topbarLinks": [],
   "topbarCtaButton": {
-    "name": "Dashboard",
+    "name": "Try our Platform",
     "url": "https://dashboard.mintlify.com"
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "Platform",
+      "url": "platform"
+    },
+    {
+      "name": "API",
+      "url": "api"
+    },
+    {
+      "name": "SDKs",
+      "url": "sdks"
+    },
+    {
+      "name": "Help",
+      "url": "help"
     }
   ],
   "anchors": [
@@ -41,16 +55,11 @@
       "name": "Community",
       "icon": "slack",
       "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Welcome",
       "pages": [
         "introduction",
         "quickstart",
@@ -58,28 +67,120 @@
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Platform",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "platform/introduction"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "API",
       "pages": [
-        "api-reference/introduction"
+        "api/introduction",
+        {
+          "group": "Hosts",
+          "pages": [
+            "api/hosts/fetch-the-latest-ip-details",
+            "api/hosts/fetch-the-record-count",
+            "api/hosts/fetch-the-ip-cve-details",
+            "api/hosts/fetch-the-ip-cve-details-1",
+            "api/hosts/fetch-the-record-based-on-query",
+            "api/hosts/fetch-the-record-based-on-query-1",
+            "api/hosts/create-the-summary-of-the-field-based-on-query"
+          ]
+        },
+        {
+          "group": "Certificate",
+          "pages": [
+            "api/certificate/fetch-the-complete-certificate",
+            "api/certificate/fetch-the-record-count",
+            "api/certificate/fetch-the-record-based-on-query",
+            "api/certificate/fetch-the-next-batch-of-record",
+            "api/certificate/fetch-the-record-based-on-query-1",
+            "api/certificate/create-the-summary-of-the-field-based-on-query"
+          ]
+        },
+        {
+          "group": "Exposed Buckets",
+          "pages": [
+            "api/exposedbuckets/get-exposed-bucket-count",
+            "api/exposedbuckets/search-exposed-buckets",
+            "api/exposedbuckets/exposed-buckets-summary"
+          ]
+        },
+        {
+          "group": "Exposed Files",
+          "pages": [
+            "api/exposedfiles/get-file-count",
+            "api/exposedfiles/search-exposed-bucket-files",
+            "api/exposedfiles/get-file-summary"
+          ]
+        },
+        {
+          "group": "DNS",
+          "pages": [
+            "api/dns/fetch-the-total-no-of-subdomain-records",
+            "api/dns/fetch-the-subdomain-record"
+          ]
+        },
+        {
+          "group": "Credits",
+          "pages": [
+            "api/credits/get-the-users-credit-usage-details"
+          ]
+        },
+        {
+          "group": "Fields",
+          "pages": [
+            "api/fields/get-the-fields-data",
+            "api/fields/get-the-fields-data-1",
+            "api/fields/get-the-fields-data-2"
+          ]
+        },
+        {
+          "group": "Health",
+          "pages": [
+            "api/health/health-check"
+          ]
+        }
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "SDKs",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "sdks/introduction",
+        {
+          "group": "Go",
+          "icon": "cloud-word",
+          "iconType": "duotone",
+          "pages": [
+            "sdks/go/overview",
+            "sdks/go/getstarted"
+          ]
+        },
+        {
+          "group": "Python",
+          "icon": "cloud-word",
+          "iconType": "duotone",
+          "pages": [
+            "sdks/python/overview",
+            "sdks/python/getstarted"
+          ]
+        },
+        {
+          "group": "Javascript",
+          "icon": "cloud-word",
+          "iconType": "duotone",
+          "pages": [
+            "sdks/js/overview",
+            "sdks/js/getstarted"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Help",
+      "pages": [
+        "help/introduction"
       ]
     }
   ],

@@ -1,0 +1,1580 @@
+openapi: 3.0.1
+info:
+  title: ODIN APIs
+  description: APIs fetchs the data based on query
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+- url: 'https://api.odin.io'
+  description: Production
+- url: 'https://api.dev.odin.io'
+  description: Development
+- url: 'http://localhost:8080'
+  description: Localhost
+paths:
+  /certificates/{hash}:
+    get:
+      tags:
+      - Certificate
+      summary: Fetch the complete certificate
+      description: Returns the complete certificate
+      parameters:
+      - name: hash
+        in: path
+        description: get the complete cert by hash
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.APIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /certificates/count:
+    post:
+      tags:
+      - Certificate
+      summary: Fetch the record count
+      description: Returns the total no of records based on query
+      requestBody:
+        description: Count Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/certificate.CertCountRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/certificate.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/certificate.CertCount'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /certificates/scroll:
+    post:
+      tags:
+      - Certificate
+      summary: Fetch the record based on query
+      description: Returns the record based on query. It uses es scroll api for the
+        pagination.
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/certificate.CertScrollRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/certificate.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/certificate.CertScroll'
+                    pagination:
+                      $ref: '#/components/schemas/certificate.SearchPagination'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /certificates/scroll/next:
+    post:
+      tags:
+      - Certificate
+      summary: Fetch the next batch of record
+      description: Returns the next batch of record based on query. It uses es scroll
+        api for the pagination.
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/certificate.NextBatchRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/certificate.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/certificate.CertScroll'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /certificates/search:
+    post:
+      tags:
+      - Certificate
+      summary: Fetch the record based on query
+      description: Returns the record based on query and blank query will return all
+        records. It uses es searchafter for the pagination.
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/certificate.CertSearchRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/certificate.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties: {}
+                    pagination:
+                      $ref: '#/components/schemas/certificate.SearchPagination'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /certificates/summary:
+    post:
+      tags:
+      - Certificate
+      summary: Create the summary of the field based on query
+      description: Returns the summary of the field based on query
+      requestBody:
+        description: Summary
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/certificate.CertSummaryRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/certificate.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/eshandler.Aggregate'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/certificate.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /credits/usage:
+    get:
+      tags:
+      - Credits
+      summary: Get the user's credit usage details
+      description: Get the user's credit usage details
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tokens.UserTokenStats'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tokens.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tokens.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tokens.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /dns/count:
+    post:
+      tags:
+      - Dns
+      summary: Fetch the total no. of subdomain records
+      description: Returns the count of subdomain records based on domain
+      requestBody:
+        description: Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/dns.DNSCountRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/dns.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/dns.Data'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /dns/search:
+    post:
+      tags:
+      - Dns
+      summary: Fetch the subdomain record
+      description: Returns the subdomain records based on query
+      requestBody:
+        description: Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/dns.DNSRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/dns.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: string
+                    pagination:
+                      $ref: '#/components/schemas/dns.SearchPagination'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /exposed/{category}/:
+    get:
+      tags:
+      - Fields
+      summary: Get the fields data
+      description: Returns the fields data
+      parameters:
+      - name: category
+        in: path
+        description: get the category
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/fields.APIResponse'
+                - type: object
+                  properties:
+                    Data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/fields.Field'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+  /exposed/buckets/count:
+    post:
+      tags:
+      - ExposedBuckets
+      summary: Get exposed bucket count
+      description: Returns exposed buckets count according to provided filters
+      requestBody:
+        description: Count Request
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.CountRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/exposed.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/exposed.SearchCount'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /exposed/buckets/search:
+    post:
+      tags:
+      - ExposedBuckets
+      summary: Search exposed buckets
+      description: Returns exposed buckets according to provided filters
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.SearchRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exposed.BucketAPIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /exposed/buckets/summary:
+    post:
+      tags:
+      - ExposedBuckets
+      summary: exposed buckets summary
+      description: Returns exposed buckets aggregated count according to provided
+        filters
+      requestBody:
+        description: Summary Request
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.SummaryRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/exposed.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/exposed.Aggregate'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /exposed/files/count:
+    post:
+      tags:
+      - ExposedFiles
+      summary: Get file count
+      description: Returns overall count of exposed bucket files according to provided
+        filters
+      requestBody:
+        description: Count Request
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.CountRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/exposed.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/exposed.SearchCount'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /exposed/files/search:
+    post:
+      tags:
+      - ExposedFiles
+      summary: search exposed bucket files
+      description: returns the matching records according to provided filters
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.SearchRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exposed.FileAPIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /exposed/files/summary:
+    post:
+      tags:
+      - ExposedFiles
+      summary: Get file summary
+      description: Returns a summary of exposed bucket files according to provided
+        filters
+      requestBody:
+        description: Summary Request
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.SummaryRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/exposed.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/exposed.Aggregate'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /fields/certificates/{category}/:
+    get:
+      tags:
+      - Fields
+      summary: Get the fields data
+      description: Returns the fields data
+      parameters:
+      - name: category
+        in: path
+        description: get the category
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.APIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+  /fields/hosts/{category}/:
+    get:
+      tags:
+      - Fields
+      summary: Get the fields data
+      description: Returns the fields data
+      parameters:
+      - name: category
+        in: path
+        description: get the category
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.APIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fields.ErrorResponse'
+  /hosts/{ip}/:
+    get:
+      tags:
+      - Hosts
+      summary: Fetch the latest ip details
+      description: Returns the complete ip details
+      parameters:
+      - name: ip
+        in: path
+        description: get the ip
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.APIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /hosts/count:
+    post:
+      tags:
+      - Hosts
+      summary: Fetch the record count
+      description: Returns the total no of records based on query
+      requestBody:
+        description: Count Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/ipservices.CountRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ipservices.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/ipservices.CertCount'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /hosts/cve/{ip}/:
+    get:
+      tags:
+      - Hosts
+      summary: Fetch the ip cve details
+      description: Returns the complete ip cve details
+      parameters:
+      - name: ip
+        in: path
+        description: get the ip
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.APIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /hosts/exploits/{ip}/:
+    get:
+      tags:
+      - Hosts
+      summary: Fetch the ip cve details
+      description: Returns the complete ip cve-exploits details
+      parameters:
+      - name: ip
+        in: path
+        description: get the ip
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.APIResponse'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /hosts/filtered/search:
+    post:
+      tags:
+      - Hosts
+      summary: Fetch the record based on query
+      description: Returns the record based on query and blank query will return all
+        records. It uses es searchafter for the pagination.
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/ipservices.SearchRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ipservices.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties: {}
+                    pagination:
+                      $ref: '#/components/schemas/ipservices.SearchPagination'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /hosts/search:
+    post:
+      tags:
+      - Hosts
+      summary: Fetch the record based on query
+      description: Returns the record based on query and blank query will return all
+        records. It uses es searchafter for the pagination.
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/ipservices.SearchRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ipservices.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties: {}
+                    pagination:
+                      $ref: '#/components/schemas/ipservices.SearchPagination'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /hosts/summary:
+    post:
+      tags:
+      - Hosts
+      summary: Create the summary of the field based on query
+      description: Returns the summary of the field based on query
+      requestBody:
+        description: Summary
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/ipservices.SummaryRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ipservices.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/eshandler.Aggregate'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "408":
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /ping:
+    get:
+      tags:
+      - Health
+      summary: Health Check
+      description: Returns the pong as response
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    certificate.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        pagination:
+          type: object
+        success:
+          type: boolean
+    certificate.CertCount:
+      type: object
+      properties:
+        count:
+          type: integer
+    certificate.CertCountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    certificate.CertScroll:
+      type: object
+      properties:
+        certificates:
+          type: array
+          items:
+            type: object
+        next_batch:
+          type: string
+    certificate.CertScrollRequest:
+      required:
+      - limit
+      - query
+      type: object
+      properties:
+        from:
+          type: integer
+        limit:
+          type: integer
+        query:
+          type: string
+    certificate.CertSearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        start:
+          type: array
+          items:
+            type: number
+    certificate.CertSummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
+    certificate.ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    certificate.NextBatchRequest:
+      required:
+      - scroll_token
+      type: object
+      properties:
+        scroll_token:
+          type: string
+    certificate.SearchPagination:
+      type: object
+      properties:
+        last:
+          type: array
+          items:
+            type: number
+        limit:
+          type: integer
+        start:
+          type: array
+          items:
+            type: number
+        total:
+          type: integer
+    dns.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        pagination:
+          type: object
+        success:
+          type: boolean
+    dns.DNSCountRequest:
+      required:
+      - domain
+      type: object
+      properties:
+        domain:
+          type: string
+        publishedAfter:
+          type: string
+        publishedBefore:
+          type: string
+    dns.DNSRequest:
+      required:
+      - domain
+      - limit
+      type: object
+      properties:
+        domain:
+          type: string
+        limit:
+          type: integer
+        publishedAfter:
+          type: string
+        publishedBefore:
+          type: string
+        start:
+          type: array
+          items:
+            type: number
+    dns.Data:
+      type: object
+      properties:
+        count:
+          type: integer
+    dns.ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    dns.SearchPagination:
+      type: object
+      properties:
+        last:
+          type: array
+          items:
+            type: number
+        limit:
+          type: integer
+        start:
+          type: array
+          items:
+            type: number
+        total:
+          type: integer
+    eshandler.Aggregate:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: object
+        doc_count_error_upper_bound:
+          type: integer
+        sum_other_doc_count:
+          type: integer
+    exposed.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        pagination:
+          type: object
+        success:
+          type: boolean
+    exposed.Aggregate:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: object
+        doc_count_error_upper_bound:
+          type: integer
+        sum_other_doc_count:
+          type: integer
+    exposed.Bucket:
+      type: object
+      properties:
+        age_in_days:
+          type: integer
+        categories:
+          type: array
+          items:
+            type: string
+        deleted:
+          type: boolean
+        ef_mod_at:
+          type: string
+        file_cat_count:
+          type: object
+          additionalProperties:
+            type: integer
+        files:
+          type: integer
+        ins_at:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+        last_found_at:
+          type: string
+        last_open_at:
+          type: string
+        lf_mod_at:
+          type: string
+        name:
+          type: string
+        new_files:
+          type: integer
+        open:
+          type: boolean
+        owner_id:
+          type: string
+        prev_scan_at:
+          type: string
+        provider:
+          type: string
+        region:
+          type: string
+        scan_at:
+          type: string
+        sensitive_files:
+          type: integer
+    exposed.BucketAPIResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/exposed.Bucket'
+        pagination:
+          $ref: '#/components/schemas/exposed.SearchPagination'
+        success:
+          type: boolean
+    exposed.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    exposed.File:
+      type: object
+      properties:
+        accessible:
+          type: boolean
+        bucket:
+          type: string
+        category:
+          type: string
+        etag:
+          type: string
+        ext:
+          type: string
+        ext_desc:
+          type: string
+        ins_at:
+          type: string
+        label:
+          type: string
+        mod_at:
+          type: string
+        name:
+          type: string
+        path:
+          type: string
+        provider:
+          type: string
+        region:
+          type: string
+        scan_at:
+          type: string
+        size:
+          type: integer
+        type:
+          type: string
+        url:
+          type: string
+    exposed.FileAPIResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/exposed.File'
+        pagination:
+          $ref: '#/components/schemas/exposed.SearchPagination'
+        success:
+          type: boolean
+    exposed.SearchCount:
+      type: object
+      properties:
+        count:
+          type: integer
+    exposed.SearchPagination:
+      type: object
+      properties:
+        last:
+          type: array
+          items:
+            type: object
+        limit:
+          type: integer
+        start:
+          type: array
+          items:
+            type: object
+        total:
+          type: integer
+    exposed.SearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        sort_by:
+          type: string
+        sort_dir:
+          type: string
+        start:
+          type: array
+          items:
+            type: object
+    exposed.SummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
+    fields.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        pagination:
+          type: object
+        success:
+          type: boolean
+    fields.ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    fields.Field:
+      type: object
+      properties:
+        category:
+          type: string
+        display_category:
+          type: string
+        name:
+          type: string
+    ipservices.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        pagination:
+          type: object
+        success:
+          type: boolean
+    ipservices.CertCount:
+      type: object
+      properties:
+        count:
+          type: integer
+    ipservices.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    ipservices.ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    ipservices.SearchPagination:
+      type: object
+      properties:
+        last:
+          type: array
+          items:
+            type: number
+        limit:
+          type: integer
+        start:
+          type: array
+          items:
+            type: number
+        total:
+          type: integer
+    ipservices.SearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        start:
+          type: array
+          items:
+            type: number
+    ipservices.SummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
+    tokens.ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    tokens.UserTokenStats:
+      type: object
+      properties:
+        expires_on:
+          type: integer
+        left:
+          type: integer
+        plan:
+          type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header
+x-original-swagger-version: "2.0"
