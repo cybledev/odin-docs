@@ -1,0 +1,64 @@
+---
+title: Go
+description: A Go SDK for interacting with the Odin API for cybersecurity and threat detection
+---
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/cybledev/odin-sdk-go.svg)](https://pkg.go.dev/github.com/cybledev/odin-sdk-go@v2)
+
+<Info>
+Original Repository: [https://github.com/cybledev/odin-sdk-go](https://github.com/cybledev/odin-sdk-go)
+</Info>
+
+ODIN's primary focus is to equip infosec teams with a precise depiction of the internet, enabling them to strengthen their security defences and proactively detect threats within their attack surface.
+
+The Odin SDK for Go provides a simple way to interact with the [Odin API](https://getodin.com/docs/api) and access various services related to cybersecurity, and more.
+
+## Installation
+
+To use the Odin SDK in your Go project, you need to install it using the `go get` command:
+
+```bash
+go get github.com/cybledev/odin-sdk-go@v2
+```
+
+## Usage
+
+<CodeGroup>
+```golang Example
+import github.com/cybledev/odin-sdk-go@v2
+
+func ApiKeyAuth() runtime.ClientAuthInfoWriter {
+    return runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, \_ strfmt.Registry) error {
+        return r.SetHeaderParam("x-api-key", os.Getenv("<APIKey>"))
+    })
+}
+
+limit := int64(10)
+esr := models.ExposedSearchRequest{
+    Limit:   &limit,
+    Query:   "provider: aws",
+    SortBy:  "files",
+    SortDir: "desc",
+}
+
+buckets := []*models.ExposedBucket{}
+searchParams := exposed_buckets.NewPostV1ExposedBucketsSearchParamsWithContext(ctx).WithQuery(&esr)
+resp, err := client.ExposedBuckets.PostV1ExposedBucketsSearch(searchParams, apiKeyAuth())
+```
+</CodeGroup>
+
+## Examples
+
+You can find various usage examples demonstrating how to interact with the Odin API in the [Example](https://github.com/cybledev/odin-sdk-go/tree/odin/odin_client_test.go) file.
+
+<Warning>
+Make sure to replace `<APIKey>` with your actual [Odin API key from the odin dashboard](https://odin.io/account/profile/api-keys).
+</Warning>
+
+## Contributing
+
+Thank you for using the Odin SDK for Go. If you encounter any issues, find a bug, or want to contribute, feel free to open an issue or submit a pull request. Your feedback and contributions are highly appreciated!
+
+## More Information
+
+For more information about our other projects and services, visit our website at https://odin.io.

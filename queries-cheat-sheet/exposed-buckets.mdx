@@ -1,0 +1,83 @@
+---
+title: Exposed Buckets
+---
+
+### All buckets containing the keyword in the name
+
+```
+upload
+```
+
+## Search based on Categories and Labels
+
+### Buckets serving web content
+
+```
+categories:"web"
+```
+
+### Bucket containing confidential data from GCP
+
+```
+labels:"confidential" AND provider:"gcp"
+```
+
+## Search based on Cloud Provider
+
+### All buckets from GCP
+
+```
+provider:"gcp"
+```
+
+### All buckets from AWS in the ap-south-1 region
+
+```
+provider:"aws" AND region:"ap-south-1"
+```
+
+## Search based on Bucket Files
+
+### Buckets containing exactly 10 files
+
+```
+files:10
+```
+
+### Buckets with the name containing "uploads" having more than 1M files
+
+```
+name:"uploads" AND files:>1000000
+```
+
+### Buckets containing more than 1000 sensitive files
+
+```
+sensitive_files:>1000
+```
+
+### Buckets containing at least 1000 audio and video files
+
+```
+file_cat_count.video:>1000 AND file_cat_count.audio:>1000
+```
+
+## Search with Time-based Filters
+
+### Buckets that were scanned in the last two days
+
+```
+scan_at:[now-2d TO now]
+```
+
+### Buckets containing files that were last modified in the last 30 days
+
+```
+lf_mod_at:[now-30d TO now]
+```
+
+### Files last modified in a specific time range
+
+```
+lf_mod_at:["2023-05-09T10:30:23.314102882Z" TO "2023-05-10T10:30:23.314102882Z"]
+```

@@ -1,0 +1,121 @@
+---
+title: Odin CLI
+---
+
+<Info>
+Original Repository: [https://github.com/cybledev/odin-cli](https://github.com/cybledev/odin-cli)
+</Info>
+
+### Demo
+
+<video
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="w-full aspect-video"
+  src="https://github.com/user-attachments/assets/cbc3f6c2-3cfa-4b1d-8ea1-2fa2e3c7c4e0"
+></video>
+
+## Installation
+
+Requires Go 1.21+
+
+<CodeBlock title="Installation Command">
+```bash
+go install github.com/cybledev/odin-cli/cmd/odin@latest
+```
+</CodeBlock>
+
+Make sure `$GOPATH` is set in `$PATH` to access the odin binary, else add it via:
+
+<CodeBlock>
+```bash
+export PATH=$PATH:$GOPATH/bin
+```
+</CodeBlock>
+
+## Usage
+
+<CodeBlock title="Odin CLI Usage">
+```bash
+$odin
+Usage:
+  odin [command]
+Examples:
+Search for hosts and services:
+        $ odin hosts search --request.query="services.port:443 AND asn.number:AS13335" --X-API-Key=<API-Key>
+Search exposed buckets:
+        $ odin exposed-buckets search --request.query='provider: aws AND file_cat_count.src: [10 TO *]' --request.sort_by="ins_at"  --request.sort_dir="desc"
+Search domain names (and store output to a file):
+        $ odin dns search --request.domain="cloudflare.com" > cf_domains.txt
+```
+</CodeBlock>
+
+### Available Commands
+
+- `hosts`: Search the list of hosts and their services
+- `exposed-buckets`: Search across millions of buckets exposed over the internet
+- `exposed-files`: Search across all the exposed files over the internet
+- `dns`: Search domains/subdomains and whois details
+- `credits`: Get the account related remaining and used credits details
+- `fields`: Get list of searchable fields
+- `health`: Get the status of the API server
+- `init`: Initialize the config file and api keys
+- `completion`: Generate completion script
+- `help`: Help about any command
+
+### CLI Flags
+
+- `--config string`: Config file path
+- `--dry-run`: Do not send the request to server
+- `--raw-output`: Output raw json response
+- `--X-API-Key string`: API Key authentication
+- `-h, --help`: Display help information
+
+Use `odin [command] --help` for more information about a specific command.
+
+## Advanced Usage
+
+### Raw Request Body Example
+
+<Tabs>
+  <Tab title="Pagination">
+    <CodeBlock>
+    ```bash
+    # use pagination.last to fetch next page
+    $ odin hosts search
+    # Response with pagination details
+    $ odin hosts search --query='{
+      "query": "*",
+      "limit": 10,
+      "start": [
+        1721808680130,
+        2
+      ]
+    }'
+    # Using body from a file
+    $ odin hosts search --query="$(cat request.json)"
+    ```
+    </CodeBlock>
+  </Tab>
+</Tabs>
+
+## Additional Resources
+
+- Detailed command usage: [Documentation](https://github.com/cybledev/odin-cli/tree/main/docs/odin.md)
+- Get your API Key: [Odin Dashboard](https://odin.io/account/profile/api-keys)
+
+## Notes
+
+Make sure to replace `<APIKey>` with your actual Odin API key from the dashboard.
+
+## Contribution and Support
+
+Thank you for using the Odin SDK for Go. If you encounter any issues, find a bug, or want to contribute:
+
+- Open an issue
+- Submit a pull request
+- Your feedback and contributions are highly appreciated!
+
+For more information about our projects and services, visit [Odin's website](https://www.odin.io).

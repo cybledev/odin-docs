@@ -1,0 +1,72 @@
+---
+title: Field Description
+---
+
+| Field | Description |
+| -------- | ----------- |
+| data | The host information data |
+| data.asn | Information about the Autonomous System Number (ASN) |
+| data.asn.country_code | The country code associated with the ASN |
+| data.asn.number | The ASN number |
+| data.asn.organization | The organisation associated with the ASN |
+| data.asn_updated_at | The last updated timestamp for the ASN information |
+| data.domains | Null value indicating no domain information available |
+| data.hostnames | An array of hostnames associated with the IP address |
+| data.hostnames.last_updated_at | The last updated timestamp for the hostname information |
+| data.hostnames.name | The hostname associated with the IP address |
+| data.ip | The IP address of the host |
+| data.is_ipv4 | Indicates whether the IP address is an IPv4 address |
+| data.is_ipv6 | Indicates whether the IP address is an IPv6 address |
+| data.last_updated_at | The last updated timestamp for the host information |
+| data.location | The geographical location information of the host |
+| data.location.city | The city where the host is located |
+| data.location.continent | The continent where the host is located |
+| data.location.coordinates | The latitude and longitude coordinates of the location |
+| data.location.country_code | The country code where the host is located |
+| data.location.country_name | The country name where the host is located |
+| data.location.geo_point | The combined latitude and longitude coordinates |
+| data.location.locale_code | The locale code associated with the location |
+| data.location.network | The network associated with the host's IP address |
+| data.location.postal_code | The postal code of the host's location |
+| data.location_updated_at | The last updated timestamp for the location information |
+| data.services | An array of services is running on the host |
+| data.services._meta | Additional metadata for the service |
+| data.services._meta.category | The category of the service |
+| data.services._meta.desc | The description of the service |
+| data.services._meta.name | The name of the service |
+| data.services._meta.tags | Null value indicating no tags available for the service |
+| data.services.extra_info | Additional information about the service |
+| data.services.last_updated_at | The last updated timestamp for the service information |
+| data.services.modules | The modules associated with the service |
+| data.services.modules.http | The HTTP-specific information for the service |
+| data.services.modules.http.content_length | The content length of the HTTP response |
+| data.services.modules.http.headers | The headers are included in the HTTP response |
+| data.services.modules.http.protocol | The protocol used for the HTTP communication |
+| data.services.modules.http.redirects | An array of redirects encountered during the HTTP request |
+| data.services.modules.http.redirects.content_length | The content length of a redirect response |
+| data.services.modules.http.redirects.location | The location of the redirect |
+| data.services.modules.http.redirects.status_code | The status code of the redirect response |
+| data.services.modules.http.redirects.status_line | The status line of the redirect response |
+| data.services.modules.http.status_code | The HTTP status code of the response |
+| data.services.modules.http.transfer_encoding | Null value indicating no transfer encoding used |
+| data.services.name | The name of the service |
+| data.services.port | The port number associated with the service |
+| data.services.product | The product name associated with the service |
+| data.services.protocol | The protocol used by the service |
+| data.services.softwares | An array of software names associated with the service |
+| data.services.tunnel | The tunneling information for the service |
+| data.services.version | The version of the service |
+| data.services_hash | The hash value representing the services |
+| data.tags | An array of tags associated with the host |
+| data.tags.last_updated_at | The last updated timestamp for the tag information |
+| data.tags.name | The name of the tag |
+| data.tags.pretty_name | The human-readable name of the tag |
+| data.tags.value | The value of the tag |
+| data.whois | WHOIS information for the host |
+| data.whois._encoding | The encoding format of the raw WHOIS information |
+| data.whois._encoding.raw | The raw WHOIS information encoded in BASE64 |
+| data.whois.descr | The description of the WHOIS information |
+| data.whois.network | The network associated with the host's IP address |
+| data.whois.organization | The organisation associated with the WHOIS information |
+| data.whois.raw | Null value indicating no raw WHOIS information available |
+| data.whois_updated_at | The last updated timestamp for the WHOIS information |

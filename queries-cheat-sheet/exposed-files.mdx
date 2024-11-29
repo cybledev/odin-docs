@@ -1,0 +1,74 @@
+---
+title: Exposed Files
+---
+
+## Free Search
+
+### All Files Containing Keyword in Name
+Search for files with a specific keyword in their filename.
+
+```
+passwords
+```
+
+## Search Based on File Extension, Size, Category, and Label
+
+### 4KB PNG Files
+Find PNG files exactly 4 kilobytes in size.
+
+```
+ext:"png" AND size:4096
+```
+
+### Audio and Video Files
+Retrieve all audio and video files.
+
+```
+category:("audio" OR "video")
+```
+
+### Financial Information Files
+Locate files labeled with financial information.
+
+```
+label:"financial"
+```
+
+## Search Based on Bucket and Cloud Provider
+
+### Files from Backup Bucket
+Search for files in a bucket with "backup" in its name.
+
+```
+bucket:"backup"
+```
+
+### GCP Logs Files
+Find all files from Google Cloud Platform containing "logs" in the full path.
+
+```
+provider:"gcp" AND path:"logs"
+```
+
+### AWS Files in Specific Region
+Retrieve files from AWS in the ap-south-1 region.
+
+```
+provider:"gcp" AND region:"ap-south-1"
+```
+
+## Time-Based Filters
+
+### Recent Video Files
+Search for video files with "cat" in the name from the last 30 days.
+
+```
+name:cat AND category:video AND scan_at:>now-30d
+```
+
+### Files Modified in Specific Time Range
+Find files modified between two specific timestamps.
+
+```
+mod_at:["2023-05-09T10:30:23.314102882Z" TO "2023-05-10T10:30:23.314102882Z"]
+```

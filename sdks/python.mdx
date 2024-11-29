@@ -1,0 +1,153 @@
+---
+title: Python
+description: A comprehensive SDK for cybersecurity threat detection and internet surface analysis
+---
+
+<Info>
+Original Repository: [https://github.com/cybledev/odin-sdk-python](https://github.com/cybledev/odin-sdk-python)
+</Info>
+
+## Requirements
+
+<CodeGroup>
+```text Python Versions
+Python 2.7 and 3.4+
+```
+</CodeGroup>
+
+## Installation & Usage
+
+### pip install
+
+<CodeGroup>
+```bash Terminal
+pip install odin-sdk
+```
+</CodeGroup>
+
+<Note>
+You may need to run `pip` with root permission: `sudo pip install odin-sdk`
+</Note>
+
+Then import the package:
+
+<CodeGroup>
+```python Python
+import odin
+```
+</CodeGroup>
+
+## Getting Started
+
+<CodeGroup>
+```python Python
+from __future__ import print_function
+import time
+import odin
+from odin.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKeyAuth
+configuration = odin.Configuration()
+configuration.api_key['X-API-Key'] = '<API-Key>'
+
+# Search exposed buckets (using pagination)
+api_instance = odin.ExposedBucketsApi(odin.ApiClient(configuration))
+try:
+    results, last = [], None
+    for _ in range(3):
+        resp = api_instance.v1_exposed_buckets_search_post(
+            {
+                "query": 'name:"lit-link-prd.appspot.com"',
+                "limit": 1,
+                "start": last,
+            }
+        )
+        results.extend(resp)
+
+        last = resp.get("pagination", {}).get("last")
+except ApiException as e:
+    # Handle exception
+    pass
+
+# Search files in an exposed bucket
+api_instance = odin.ExposedFilesApi(odin.ApiClient(configuration))
+try:
+    resp = api_instance.v1_exposed_files_search_post(
+        {
+            "query": 'provider: aws',
+            "limit": 1,
+            "sortDir": "desc",
+            "sortBy": "files"
+        }
+    )
+    resp
+except ApiException as e:
+    # Handle exception
+    pass
+```
+</CodeGroup>
+
+## API Methods Examples
+
+### Hosts Search
+
+<CodeGroup>
+```python Python
+# Search hosts
+api_instance = odin.HostsApi(odin.ApiClient(configuration))
+try:
+    resp = api_instance.v1_hosts_search_post(
+        {
+            "query": "(last_updated_at:[\"2024-07-08T02:41:15.528Z\" TO *] AND services.port:80) OR asn.number:AS63949",
+            "limit": 1
+        }
+    )
+    resp
+except ApiException as e:
+    # Handle exception
+    pass
+```
+</CodeGroup>
+
+### Host CVE IP
+
+<CodeGroup>
+```python Python
+# Hosts CVE IP
+api_instance = odin.HostsApi(odin.ApiClient(configuration))
+try:
+    resp = api_instance.v1_hosts_cve_ip_get("<ip>")
+    resp.to_dict()
+except ApiException as e:
+    # Handle exception
+    pass
+```
+</CodeGroup>
+
+## Authorization
+
+<Note>
+### ApiKeyAuth
+- **Type**: API key
+- **API key parameter name**: X-API-Key
+- **Location**: HTTP header
+
+Generate your [Odin API key from the odin dashboard](https://search.odin.io/account/api-keys).
+</Note>
+
+## Additional Resources
+
+<Tip>
+If you encounter any issues, find a bug, or want to contribute, feel free to open an issue or submit a pull request. Your feedback and contributions are highly appreciated!
+
+For more information about our other projects and services, visit our website at [https://odin.io](https://odin.io).
+</Tip>
+
+## SDK Metadata
+
+<Note>
+- **API version**: 1.0
+- **Package version**: 2.0.0
+- **Build package**: io.swagger.codegen.v3.generators.python.PythonClientCodegen
+</Note>

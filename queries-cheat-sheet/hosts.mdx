@@ -1,0 +1,97 @@
+---
+title: Hosts
+---
+
+### All Hosts Searchable Fields
+
+Search across all hosts using a keyword:
+
+```
+google
+```
+
+### Direct Host Search
+
+Search for a specific host by IP address:
+
+```
+8.8.8.8
+```
+
+## Search in ASN, Geolocation, or BGP Prefix
+
+### Search by Organization
+
+Find all hosts belonging to Google:
+
+```
+asn.organization:"Google"
+```
+
+### Search by Organization and Country
+
+Find Google hosts specifically in India:
+
+```
+asn.organization:"Google" AND location.country_code:"IN"
+```
+
+### Search by Autonomous System Number
+
+Find all hosts within a specific AS Number:
+
+```
+asn.number:"AS38266"
+```
+
+## Search for Exposed Ports, Services, and Products
+
+### Open Elasticsearch Hosts
+
+Find Elasticsearch hosts worldwide:
+
+```
+services.port:9200
+```
+
+### Open SSH Services
+
+Locate hosts with SSH services:
+
+```
+services.name:ssh
+```
+
+### Filter by HTTP Status and Web Server
+
+Find sites with 200 OK response and Nginx web server:
+
+```
+services.modules.http.status_code:200 AND services.product:"nginx"
+```
+
+## Time-Based Filtering
+
+### Filter by Last Updated/Created Time
+
+Search for documents updated or created within a specific time range:
+
+```
+last_updated_at:["2023-05-09T10:30:23.314102882Z" TO "2023-05-10T10:30:23.314102882Z"]
+```
+
+### WHOIS Update Time
+
+Filter by WHOIS update time:
+
+```
+whois_updated_at:["2023-05-09T10:30:23.314102882Z" TO "2023-05-10T10:30:23.314102882Z"]
+```
+
+### Services Update Time
+
+Find services updated or created within a time range:
+
+```
+services.last_updated_at:["2023-05-09T10:30:23.314102882Z" TO "2023-05-10T10:30:23.314102882Z"]
+```

@@ -1,91 +1,158 @@
 {
+  "openapi": "openapi.json",
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Odin",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#215FAE",
+    "light": "#215FAE",
+    "dark": "#215FAE",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#215FAE",
+      "to": "#215FAE"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@odin.io"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Try our Platform",
+    "url": "https://odin.io"
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Platform",
+      "url": "platform"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "API",
+      "url": "api"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "SDKs",
+      "url": "sdks"
+    },
+    {
+      "name": "CLI",
+      "url": "cli"
+    },
+    {
+      "name": "Postman",
+      "url": "postman"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Platform",
       "pages": [
         "introduction",
-        "quickstart",
-        "development"
+        "authentication",
+        "field-description",
+        {
+          "group": "Queries Cheat Sheet",
+          "pages": [
+            "queries-cheat-sheet/hosts",
+            "queries-cheat-sheet/exposed-buckets",
+            "queries-cheat-sheet/exposed-files"
+          ]
+        },
+        "status-codes"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "SDKs",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "sdks/go",
+        "sdks/js",
+        "sdks/python"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "CLI",
       "pages": [
-        "api-reference/introduction"
+        "cli/cli"
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Postman",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "postman/postman"
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        {
+          "group": "Hosts",
+          "pages": [
+            "api/hosts/search-hosts",
+            "api/hosts/get-summary",
+            "api/hosts/get-the-record-count",
+            "api/hosts/get-cve-details",
+            "api/hosts/get-ip-cve-details",
+            "api/hosts/get-cve",
+            "api/hosts/get-exploits-for-ip",
+            "api/hosts/get-exploits-for-ip-and-cve",
+            "api/hosts/get-the-latest-ip-details"
+          ]
+        },
+        {
+          "group": "Exposed Buckets",
+          "pages": [
+            "api/exposedbuckets/search-exposed-buckets",
+            "api/exposedbuckets/get-exposed-buckets-summary",
+            "api/exposedbuckets/get-exposed-bucket-count"
+          ]
+        },
+        {
+          "group": "Exposed Files",
+          "pages": [
+            "api/exposedfiles/search-exposed-files",
+            "api/exposedfiles/get-file-summary",
+            "api/exposedfiles/get-file-count"
+          ]
+        },
+        {
+          "group": "Domain",
+          "pages": [
+            "api/domain/search-domains",
+            "api/domain/get-domains-count",
+            "api/domain/fetch-the-subdomain-record",
+            "api/domain/fetch-the-total-no-of-subdomain-records",
+            "api/domain/fetch-the-domain-whois-record-details",
+            "api/domain/fetch-all-the-domain-whois-historical-records",
+            "api/domain/get-the-expiry-for-a-particular-domain",
+            "api/domain/fetch-all-the-domain-whois-historical-records-1"
+          ]
+        },
+        {
+          "group": "Fields",
+          "pages": [
+            "api/fields/get-the-fields-for-exposed",
+            "api/fields/get-the-fields-data",
+            "api/fields/get-the-fields-for-hosts"
+          ]
+        },
+        {
+          "group": "Health",
+          "pages": [
+            "api/health/health-check"
+          ]
+        }
       ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://x.com/OdinThreatIntel",
+    "medium": "https://medium.com/@OdinThreatIntel",
+    "github": "https://github.com/cybledev/odin-sdk-go",
+    "linkedin": "https://www.linkedin.com/showcase/odinthreatintel/"
   }
 }
