@@ -99,7 +99,6 @@
             "api/hosts/get-ip-cve-details",
             "api/hosts/get-cve",
             "api/hosts/get-exploits-for-ip",
-            "api/hosts/get-exploits-for-ip-and-cve",
             "api/hosts/get-the-latest-ip-details"
           ]
         },
