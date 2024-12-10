@@ -1,5 +1,5 @@
 {
-  "openapi": "openapi.json",
+  "openapi": "openapi.yaml",
   "$schema": "https://mintlify.com/schema.json",
   "name": "Odin",
   "logo": {

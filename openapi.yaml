@@ -1,7 +1,8 @@
 openapi: 3.0.1
 info:
   title: Odin
-  description: "ODIN APIs to search across IP Services, CVEs, Exposed Files/Buckets,\
+  description:
+    "ODIN APIs to search across IP Services, CVEs, Exposed Files/Buckets,\
     \ Domains and more"
   contact: {}
   license:
@@ -9,72 +10,72 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: "1.0"
 servers:
-- url: https://api.odin.io/
+  - url: https://api.odin.io/
 paths:
   /v1/cves/all/{ip}/{page}:
     get:
       tags:
-      - Hosts
+        - Hosts
       summary: Get cve details
       description: Get the detailed cve details for ip based on page
       parameters:
-      - name: ip
-        in: path
-        description: get the ip
-        required: true
-        schema:
-          type: string
-      - name: page
-        in: path
-        description: get the page
-        required: true
-        schema:
-          type: string
+        - name: ip
+          in: path
+          description: get the ip
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: path
+          description: get the page
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ipservices.IpCveResponse'
+                $ref: "#/components/schemas/ipservices.IpCveResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/domain/count:
     post:
       tags:
-      - domain
+        - domain
       summary: Get domains count
       description: Get count of domain records based on query
       requestBody:
         description: Query
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/dns.DNSCountRequest'
+              $ref: "#/components/schemas/dns.DNSCountRequest"
         required: true
       responses:
         "200":
@@ -83,36 +84,36 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/dns.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/dns.Data'
+                  - $ref: "#/components/schemas/dns.APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/dns.Data"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
       x-codegen-request-body-name: query
   /v1/domain/search:
     post:
       tags:
-      - domain
+        - domain
       summary: Search domains
       description: Search domains based on the query
       requestBody:
         description: Query
         content:
-          '*/*':
+          "application/json":
             schema:
-              $ref: '#/components/schemas/dns.DomainRequest'
+              $ref: "#/components/schemas/dns.DomainRequest"
         required: true
       responses:
         "200":
@@ -121,40 +122,39 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/dns.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/eshandler.DNS'
-                    pagination:
-                      $ref: '#/components/schemas/dns.SearchPagination'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/eshandler.DNS"
+                      pagination:
+                        $ref: "#/components/schemas/dns.SearchPagination"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
       x-codegen-request-body-name: query
   /v1/domain/subdomain/count:
     post:
       tags:
-      - domain
+        - domain
       summary: Fetch the total no. of subdomain records
       description: Returns the count of subdomain records based on domain
       requestBody:
         description: Query
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/dns.DNSCountRequest'
+              $ref: "#/components/schemas/dns.DNSCountRequest"
         required: true
       responses:
         "200":
@@ -163,38 +163,38 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/dns.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/dns.Data'
+                  - $ref: "#/components/schemas/dns.APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/dns.Data"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/domain/subdomain/search:
     post:
       tags:
-      - domain
+        - domain
       summary: Fetch the subdomain record
       description: Returns the subdomain records based on query
       requestBody:
         description: Query
         content:
-          '*/*':
+          "application/json":
             schema:
-              $ref: '#/components/schemas/dns.DomainRequest'
+              $ref: "#/components/schemas/dns.DomainRequest"
         required: true
       responses:
         "200":
@@ -203,44 +203,44 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/dns.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        type: string
-                    pagination:
-                      $ref: '#/components/schemas/dns.SearchPagination'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: string
+                      pagination:
+                        $ref: "#/components/schemas/dns.SearchPagination"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/dns.ErrorResponse'
+                $ref: "#/components/schemas/dns.ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/domain/whois/{domain-name}:
     get:
       tags:
-      - domain
+        - domain
       summary: Fetch the domain whois record details
-      description: "Provides extensive details about the domain whois record like\
+      description:
+        "Provides extensive details about the domain whois record like\
         \ name servers, domain status, registrar, etc."
       parameters:
-      - name: domain-name
-        in: path
-        description: domain
-        required: true
-        schema:
-          type: string
+        - name: domain-name
+          in: path
+          description: domain
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -248,11 +248,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/schema.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/schema.DomainWhoisResponse'
+                  - $ref: "#/components/schemas/schema.APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/schema.DomainWhoisResponse"
         "400":
           description: Bad Request
           content:
@@ -278,21 +278,22 @@ paths:
               schema:
                 type: object
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/domain/whois/{domain-name}/historical:
     get:
       tags:
-      - domain
+        - domain
       summary: Fetch all the domain whois historical records
-      description: "Provides historical details about the domain whois record like\
+      description:
+        "Provides historical details about the domain whois record like\
         \ name servers, domain status, registrar, etc"
       parameters:
-      - name: domain-name
-        in: path
-        description: domain
-        required: true
-        schema:
-          type: string
+        - name: domain-name
+          in: path
+          description: domain
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -300,15 +301,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/schema.APIResponse'
-                - type: object
-                  properties:
-                    ' meta':
-                      $ref: '#/components/schemas/schema.PaginationMeta'
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/schema.DomainWhoisResponse'
+                  - type: object
+                    properties:
+                      " meta":
+                        $ref: "#/components/schemas/schema.PaginationMeta"
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/schema.DomainWhoisResponse"
         "400":
           description: Bad Request
           content:
@@ -334,21 +334,22 @@ paths:
               schema:
                 type: object
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/domain/whois/{domain-name}/is-expired:
     get:
       tags:
-      - domain
+        - domain
       summary: Get the expiry for a particular domain
-      description: "Provides historical details about the domain whois record like\
+      description:
+        "Provides historical details about the domain whois record like\
         \ name servers, domain status, registrar, etc"
       parameters:
-      - name: domain-name
-        in: path
-        description: domain
-        required: true
-        schema:
-          type: string
+        - name: domain-name
+          in: path
+          description: domain
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -356,15 +357,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/schema.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/schema.DomainWhoisResponse'
-                    meta:
-                      $ref: '#/components/schemas/schema.PaginationMeta'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/schema.DomainWhoisResponse"
+                      meta:
+                        $ref: "#/components/schemas/schema.PaginationMeta"
         "400":
           description: Bad Request
           content:
@@ -390,21 +390,22 @@ paths:
               schema:
                 type: object
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/domain/whois/{domain-name}/is-registered:
     get:
       tags:
-      - domain
+        - domain
       summary: Fetch all the domain whois historical records
-      description: "Provides historical details about the domain whois record like\
+      description:
+        "Provides historical details about the domain whois record like\
         \ name servers, domain status, registrar, etc"
       parameters:
-      - name: domain-name
-        in: path
-        description: domain
-        required: true
-        schema:
-          type: string
+        - name: domain-name
+          in: path
+          description: domain
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -412,15 +413,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/schema.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/schema.DomainWhoisResponse'
-                    meta:
-                      $ref: '#/components/schemas/schema.PaginationMeta'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/schema.DomainWhoisResponse"
+                      meta:
+                        $ref: "#/components/schemas/schema.PaginationMeta"
         "400":
           description: Bad Request
           content:
@@ -446,19 +446,19 @@ paths:
               schema:
                 type: object
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/exposed/buckets/count:
     post:
       tags:
-      - ExposedBuckets
+        - ExposedBuckets
       summary: Get exposed bucket count
       description: Get exposed bucket count according to provided filters
       requestBody:
         description: Count Request
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/exposed.CountRequest'
+              $ref: "#/components/schemas/exposed.CountRequest"
         required: true
       responses:
         "200":
@@ -467,11 +467,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/exposed.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/exposed.SearchCount'
+                  - $ref: "#/components/schemas/exposed.APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/exposed.SearchCount"
         "400":
           description: Bad Request
           content:
@@ -487,24 +487,25 @@ paths:
                 type: object
                 additionalProperties: true
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/exposed/buckets/search:
     post:
       tags:
-      - ExposedBuckets
+        - ExposedBuckets
+      operationId: searchExposedBuckets
       summary: Search exposed buckets
       description: |-
         Search exposed buckets according to provided filters
-        Search across categories {img, aud, vid, font, doc, src, web, bkup, dbdump}
-        Search across labels {credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable}
-        Search across providers {aws, gcp, do, linode}
+        Search across categories "img, aud, vid, font, doc, src, web, bkup, dbdump"
+        Search across labels "credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable"
+        Search across providers "aws, gcp, do, linode"
       requestBody:
         description: Search Query
         content:
-          '*/*':
+          application/json:
             schema:
-              $ref: '#/components/schemas/exposed.SearchRequest'
+              $ref: "#/components/schemas/exposed.SearchRequest"
         required: true
       responses:
         "200":
@@ -512,7 +513,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/exposed.BucketAPIResponse'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/exposed.SearchResponse"
+                  success:
+                    type: boolean
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      limit:
+                        type: integer
+                      start:
+                        type: array
+                        items:
+                          type: object
+                      last:
+                        type: array
+                        items:
+                          type: object
         "400":
           description: Bad Request
           content:
@@ -528,20 +551,20 @@ paths:
                 type: object
                 additionalProperties: true
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/exposed/buckets/summary:
     post:
       tags:
-      - ExposedBuckets
+        - ExposedBuckets
       summary: Get Exposed buckets summary
       description: Get Returns exposed buckets aggregated count according to filters
       requestBody:
         description: Summary Request
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/exposed.SummaryRequest'
+              $ref: "#/components/schemas/exposed.SummaryRequest"
         required: true
       responses:
         "200":
@@ -550,11 +573,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/exposed.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/exposed.Aggregate'
+                  - $ref: "#/components/schemas/exposed.APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/exposed.Aggregate"
         "400":
           description: Bad Request
           content:
@@ -570,20 +593,20 @@ paths:
                 type: object
                 additionalProperties: true
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/exposed/files/count:
     post:
       tags:
-      - ExposedFiles
+        - ExposedFiles
       summary: Get file count
       description: Returns overall count of exposed bucket files according to filters
       requestBody:
         description: Count Request
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/exposed.CountRequest'
+              $ref: "#/components/schemas/exposed.CountRequest"
         required: true
       responses:
         "200":
@@ -592,11 +615,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/exposed.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/exposed.SearchCount'
+                  - $ref: "#/components/schemas/exposed.APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/exposed.SearchCount"
         "400":
           description: Bad Request
           content:
@@ -612,24 +635,24 @@ paths:
                 type: object
                 additionalProperties: true
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/exposed/files/search:
     post:
       tags:
-      - ExposedFiles
+        - ExposedFiles
       summary: Search exposed files
       description: |-
         Search exposed files using advanved filters
-        Search across categories {img, aud, vid, font, txt, doc, src, db, march, arch, 3d, exec, key, cert}
-        Search across labels {credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable}
-        Search across providers {aws, gcp, do, linode}
+        Search across categories "img, aud, vid, font, txt, doc, src, db, march, arch, 3d, exec, key, cert"
+        Search across labels "credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable"
+        Search across providers "aws, gcp, do, linode"
       requestBody:
         description: Search Query
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/exposed.SearchRequest'
+              $ref: "#/components/schemas/exposed.SearchRequest"
         required: true
       responses:
         "200":
@@ -637,7 +660,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/exposed.FileAPIResponse'
+                $ref: "#/components/schemas/exposed.FileAPIResponse"
         "400":
           description: Bad Request
           content:
@@ -660,21 +683,22 @@ paths:
                 type: object
                 additionalProperties: true
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/exposed/files/summary:
     post:
       tags:
-      - ExposedFiles
+        - ExposedFiles
       summary: Get file summary
-      description: Returns a summary of exposed bucket files according to provided
+      description:
+        Returns a summary of exposed bucket files according to provided
         filters
       requestBody:
         description: Summary Request
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/exposed.SummaryRequest'
+              $ref: "#/components/schemas/exposed.SummaryRequest"
         required: true
       responses:
         "200":
@@ -683,11 +707,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/exposed.APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/exposed.Aggregate'
+                  - $ref: "#/components/schemas/exposed.APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/exposed.Aggregate"
         "400":
           description: Bad Request
           content:
@@ -703,14 +727,15 @@ paths:
                 type: object
                 additionalProperties: true
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/fields/exposed/buckets/:
     get:
       tags:
-      - Fields
+        - Fields
       summary: Get the fields for exposed
-      description: Get the list of fields that can be used to query on exposed buckets
+      description:
+        Get the list of fields that can be used to query on exposed buckets
         and files
       responses:
         "200":
@@ -719,41 +744,41 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/APIResponse'
-                - type: object
-                  properties:
-                    Data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Field'
+                  - $ref: "#/components/schemas/APIResponse"
+                  - type: object
+                    properties:
+                      Data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Field"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /v1/fields/exposed/files/:
     get:
       tags:
-      - Fields
+        - Fields
       summary: Get the fields data
       description: Returns the fields data
       responses:
@@ -763,50 +788,50 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/APIResponse'
-                - type: object
-                  properties:
-                    Data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Field'
+                  - $ref: "#/components/schemas/APIResponse"
+                  - type: object
+                    properties:
+                      Data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Field"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /v1/fields/hosts/{category}/:
     get:
       tags:
-      - Fields
+        - Fields
       summary: Get the fields for hosts
       description: Get the list of fields to query on host
       parameters:
-      - name: category
-        in: path
-        description: get the category
-        required: true
-        schema:
-          type: string
+        - name: category
+          in: path
+          description: get the category
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -814,49 +839,48 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Field'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Field"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
   /v1/hosts/count:
     post:
       tags:
-      - Hosts
+        - Hosts
       summary: Get the record count
       description: Returns the total no of records based on query
       requestBody:
         description: Count Query
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/CountRequest'
+              $ref: "#/components/schemas/CountRequest"
         required: true
       responses:
         "200":
@@ -865,225 +889,225 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/APIResponse'
-                - type: object
-                  properties:
-                    ' meta':
-                      $ref: '#/components/schemas/PaginationStruct'
-                    data:
-                      $ref: '#/components/schemas/CertCount'
+                  - $ref: "#/components/schemas/APIResponse"
+                  - type: object
+                    properties:
+                      " meta":
+                        $ref: "#/components/schemas/PaginationStruct"
+                      data:
+                        $ref: "#/components/schemas/CertCount"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/hosts/cve/{ip}/:
     get:
       tags:
-      - Hosts
+        - Hosts
       summary: Get ip cve details
       description: Get detailed lost of cve ips
       parameters:
-      - name: ip
-        in: path
-        description: get the ip
-        required: true
-        schema:
-          type: string
+        - name: ip
+          in: path
+          description: get the ip
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ipservices.IpCveResponse'
+                $ref: "#/components/schemas/ipservices.IpCveResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/hosts/cves/{ip}/{cve}:
     get:
       tags:
-      - Hosts
+        - Hosts
       summary: Get cve
       description: Get the detailed cve based on ip and cve
       parameters:
-      - name: ip
-        in: path
-        description: host ip ip
-        required: true
-        schema:
-          type: string
-      - name: cve
-        in: path
-        description: cve id
-        required: true
-        schema:
-          type: string
+        - name: ip
+          in: path
+          description: host ip ip
+          required: true
+          schema:
+            type: string
+        - name: cve
+          in: path
+          description: cve id
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ipservices.IpCveResponse'
+                $ref: "#/components/schemas/ipservices.IpCveResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/hosts/exploits/{ip}/:
     get:
       tags:
-      - Hosts
+        - Hosts
       summary: Get exploits for ip
       description: Get the detailed list of exploits for the ip
       parameters:
-      - name: ip
-        in: path
-        description: get the ip
-        required: true
-        schema:
-          type: string
+        - name: ip
+          in: path
+          description: get the ip
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ipservices.IpCveResponse'
+                $ref: "#/components/schemas/ipservices.IpCveResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/hosts/exploits/{ip}/{cve}:
     get:
       tags:
-      - Hosts
+        - Hosts
       summary: Get exploits for ip and cve
       description: Get the detailed exploit details for ip and cve
       parameters:
-      - name: ip
-        in: path
-        description: ip address of the host
-        required: true
-        schema:
-          type: string
-      - name: cve
-        in: path
-        description: cve id
-        required: true
-        schema:
-          type: string
+        - name: ip
+          in: path
+          description: ip address of the host
+          required: true
+          schema:
+            type: string
+        - name: cve
+          in: path
+          description: cve id
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -1091,45 +1115,45 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/vision.ExploitDetails'
+                  - $ref: "#/components/schemas/APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/vision.ExploitDetails"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/hosts/search:
     post:
       tags:
-      - Hosts
+        - Hosts
       summary: Search hosts
       description: Get the detailed list of hosts based on query
       requestBody:
         description: Search Query
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/SearchRequest'
+              $ref: "#/components/schemas/SearchRequest"
         required: true
       responses:
         "200":
@@ -1138,82 +1162,82 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/APIResponse'
-                - type: object
-                  properties:
-                    ' data':
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/ipservices.IPSummaryData'
-                    pagination:
-                      $ref: '#/components/schemas/SearchPagination'
+                  - $ref: "#/components/schemas/APIResponse"
+                  - type: object
+                    properties:
+                      " data":
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/ipservices.IPSummaryData"
+                      pagination:
+                        $ref: "#/components/schemas/SearchPagination"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ErrorResponse'
-                - type: object
-                  properties:
-                    ' error':
-                      type: string
-                    success:
-                      type: boolean
+                  - $ref: "#/components/schemas/ErrorResponse"
+                  - type: object
+                    properties:
+                      " error":
+                        type: string
+                      success:
+                        type: boolean
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/hosts/summary:
     post:
       tags:
-      - Hosts
+        - Hosts
       summary: Get summary
       description: Get the summary of hosts based on the field
       requestBody:
         description: Summary
         content:
-          '*/*':
+          "*/*":
             schema:
-              $ref: '#/components/schemas/SummaryRequest'
+              $ref: "#/components/schemas/SummaryRequest"
         required: true
       responses:
         "200":
@@ -1221,47 +1245,47 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ipservices.HostsSummaryResponse'
+                $ref: "#/components/schemas/ipservices.HostsSummaryResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       x-codegen-request-body-name: query
   /v1/hosts/{ip}/:
     get:
       tags:
-      - Hosts
+        - Hosts
       summary: Get the latest ip details
       description: Get the complete and latest ip details
       parameters:
-      - name: ip
-        in: path
-        description: get the ip
-        required: true
-        schema:
-          type: string
+        - name: ip
+          in: path
+          description: get the ip
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -1269,41 +1293,41 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/APIResponse'
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/ipservices.IPSummaryData'
+                  - $ref: "#/components/schemas/APIResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/ipservices.IPSummaryData"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "402":
           description: Payment Required
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "408":
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
   /v1/ping:
     get:
       tags:
-      - Health
+        - Health
       summary: Health Check
       description: Returns the pong as response
       responses:
@@ -1375,7 +1399,7 @@ components:
         exploit:
           type: array
           items:
-            $ref: '#/components/schemas/IPExploitDetails'
+            $ref: "#/components/schemas/IPExploitDetails"
         id:
           type: string
         references:
@@ -1462,11 +1486,11 @@ components:
       type: object
       properties:
         _meta:
-          $ref: '#/components/schemas/IPServiceMeta'
+          $ref: "#/components/schemas/IPServiceMeta"
         cve:
           type: array
           items:
-            $ref: '#/components/schemas/IPCVE'
+            $ref: "#/components/schemas/IPCVE"
         extra_info:
           type: string
         last_updated_at:
@@ -1485,7 +1509,7 @@ components:
         softwares:
           type: array
           items:
-            $ref: '#/components/schemas/IPServiceSoftware'
+            $ref: "#/components/schemas/IPServiceSoftware"
         tunnel:
           type: string
         url:
@@ -1539,7 +1563,7 @@ components:
       type: object
       properties:
         _encoding:
-          $ref: '#/components/schemas/Encoding'
+          $ref: "#/components/schemas/Encoding"
         descr:
           type: string
         network:
@@ -1572,7 +1596,7 @@ components:
           type: integer
     SearchRequest:
       required:
-      - limit
+        - limit
       type: object
       properties:
         limit:
@@ -1585,8 +1609,8 @@ components:
             type: number
     SummaryRequest:
       required:
-      - field
-      - limit
+        - field
+        - limit
       type: object
       properties:
         field:
@@ -1622,7 +1646,7 @@ components:
           type: integer
     dns.DomainRequest:
       required:
-      - limit
+        - limit
       type: object
       properties:
         domain:
@@ -1680,7 +1704,7 @@ components:
         domain:
           type: string
         ext_dns_name:
-          $ref: '#/components/schemas/eshandler.EXTDNSName'
+          $ref: "#/components/schemas/eshandler.EXTDNSName"
         subdomain:
           type: string
     eshandler.EXTDNSName:
@@ -1769,9 +1793,9 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/exposed.Bucket'
+            $ref: "#/components/schemas/exposed.Bucket"
         pagination:
-          $ref: '#/components/schemas/exposed.SearchPagination'
+          $ref: "#/components/schemas/exposed.SearchPagination"
         success:
           type: boolean
     exposed.CountRequest:
@@ -1824,9 +1848,9 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/exposed.File'
+            $ref: "#/components/schemas/exposed.File"
         pagination:
-          $ref: '#/components/schemas/exposed.SearchPagination'
+          $ref: "#/components/schemas/exposed.SearchPagination"
         success:
           type: boolean
     exposed.SearchCount:
@@ -1851,7 +1875,7 @@ components:
           type: integer
     exposed.SearchRequest:
       required:
-      - limit
+        - limit
       type: object
       properties:
         limit:
@@ -1868,8 +1892,8 @@ components:
             type: object
     exposed.SummaryRequest:
       required:
-      - field
-      - limit
+        - field
+        - limit
       type: object
       properties:
         field:
@@ -1905,7 +1929,7 @@ components:
       type: object
       properties:
         asn:
-          $ref: '#/components/schemas/IPASN'
+          $ref: "#/components/schemas/IPASN"
         asn_updated_at:
           type: string
         banner:
@@ -1915,11 +1939,11 @@ components:
         domains:
           type: array
           items:
-            $ref: '#/components/schemas/IPDomain'
+            $ref: "#/components/schemas/IPDomain"
         hostnames:
           type: array
           items:
-            $ref: '#/components/schemas/IPHostname'
+            $ref: "#/components/schemas/IPHostname"
         ip:
           type: string
         is_ipv4:
@@ -1931,7 +1955,7 @@ components:
         last_updated_at:
           type: string
         location:
-          $ref: '#/components/schemas/IPLocation'
+          $ref: "#/components/schemas/IPLocation"
         location_updated_at:
           type: string
         scan_id:
@@ -1939,15 +1963,15 @@ components:
         services:
           type: array
           items:
-            $ref: '#/components/schemas/IPService'
+            $ref: "#/components/schemas/IPService"
         services_hash:
           type: string
         tags:
           type: array
           items:
-            $ref: '#/components/schemas/IPTag'
+            $ref: "#/components/schemas/IPTag"
         whois:
-          $ref: '#/components/schemas/IPWhois'
+          $ref: "#/components/schemas/IPWhois"
         whois_updated_at:
           type: string
     ipservices.IpCveDetails:
@@ -1996,7 +2020,7 @@ components:
         data:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/ipservices.IpCveDetails'
+            $ref: "#/components/schemas/ipservices.IpCveDetails"
         message:
           type: string
         success:
@@ -2055,11 +2079,11 @@ components:
       type: object
       properties:
         administrative_contact:
-          $ref: '#/components/schemas/schema.Contact'
+          $ref: "#/components/schemas/schema.Contact"
         audited_fields:
-          $ref: '#/components/schemas/schema.Audit'
+          $ref: "#/components/schemas/schema.Audit"
         billing_contact:
-          $ref: '#/components/schemas/schema.Contact'
+          $ref: "#/components/schemas/schema.Contact"
         created_date:
           type: string
         domain_name:
@@ -2078,11 +2102,11 @@ components:
           type: string
           description: IngestedAt            time.Time  `json:"ingested_at"`
         registrant_contact:
-          $ref: '#/components/schemas/schema.Contact'
+          $ref: "#/components/schemas/schema.Contact"
         registrar:
-          $ref: '#/components/schemas/schema.Registrar'
+          $ref: "#/components/schemas/schema.Registrar"
         technical_contact:
-          $ref: '#/components/schemas/schema.Contact'
+          $ref: "#/components/schemas/schema.Contact"
         tld:
           type: string
         updated_date:
@@ -2170,7 +2194,7 @@ components:
         continent:
           type: string
         coordinates:
-          $ref: '#/components/schemas/service.Coordinates'
+          $ref: "#/components/schemas/service.Coordinates"
         country_code:
           type: string
         country_name:
@@ -2230,7 +2254,7 @@ components:
       type: object
       properties:
         _encoding:
-          $ref: '#/components/schemas/service.Encoding'
+          $ref: "#/components/schemas/service.Encoding"
         descr:
           type: string
         network:
@@ -2243,9 +2267,9 @@ components:
       type: object
       properties:
         _meta:
-          $ref: '#/components/schemas/service.IPServiceMeta'
+          $ref: "#/components/schemas/service.IPServiceMeta"
         asn:
-          $ref: '#/components/schemas/service.IPASN'
+          $ref: "#/components/schemas/service.IPASN"
         asn_updated_at:
           type: string
         banners:
@@ -2255,17 +2279,17 @@ components:
         cve:
           type: array
           items:
-            $ref: '#/components/schemas/service.FullCveData'
+            $ref: "#/components/schemas/service.FullCveData"
         domains:
           type: array
           items:
-            $ref: '#/components/schemas/service.IPDomain'
+            $ref: "#/components/schemas/service.IPDomain"
         extra_info:
           type: string
         hostnames:
           type: array
           items:
-            $ref: '#/components/schemas/service.IPHostname'
+            $ref: "#/components/schemas/service.IPHostname"
         ip:
           type: string
         is_ipv4:
@@ -2277,7 +2301,7 @@ components:
         last_updated_at:
           type: string
         location:
-          $ref: '#/components/schemas/service.IPLocation'
+          $ref: "#/components/schemas/service.IPLocation"
         location_updated_at:
           type: string
         modules:
@@ -2299,17 +2323,17 @@ components:
         softwares:
           type: array
           items:
-            $ref: '#/components/schemas/service.IPServiceSoftware'
+            $ref: "#/components/schemas/service.IPServiceSoftware"
         tags:
           type: array
           items:
-            $ref: '#/components/schemas/service.IPTag'
+            $ref: "#/components/schemas/service.IPTag"
         tunnel:
           type: string
         version:
           type: string
         whois:
-          $ref: '#/components/schemas/service.IPWhois'
+          $ref: "#/components/schemas/service.IPWhois"
         whois_updated_at:
           type: string
     tokens.DetailStat:
@@ -2339,20 +2363,20 @@ components:
       type: object
       properties:
         bucket_file:
-          $ref: '#/components/schemas/tokens.FinalStats'
+          $ref: "#/components/schemas/tokens.FinalStats"
         data:
           type: object
         host_cert:
-          $ref: '#/components/schemas/tokens.FinalStats'
+          $ref: "#/components/schemas/tokens.FinalStats"
     tokens.UserTokenStats:
       type: object
       properties:
         details:
-          $ref: '#/components/schemas/tokens.DetailStat'
+          $ref: "#/components/schemas/tokens.DetailStat"
         expires_on:
           type: integer
         search:
-          $ref: '#/components/schemas/tokens.SearchStat'
+          $ref: "#/components/schemas/tokens.SearchStat"
     vision.ExploitDetails:
       type: object
       properties:
@@ -2374,4 +2398,3 @@ components:
       name: X-API-Key
       in: header
 x-original-swagger-version: "2.0"
-
