@@ -1,10 +1,10 @@
 ---
-title: Js
+title: JS
 description: A comprehensive SDK for interacting with the Odin API for cybersecurity and internet threat detection
 ---
 
 <Info>
-Original Repository: [https://github.com/cybledev/odin-sdk-js](https://github.com/cybledev/odin-sdk-js)
+  Original Repository: [https://github.com/cybledev/odin-sdk-js](https://github.com/cybledev/odin-sdk-js)
 </Info>
 
 ## Installation
@@ -12,39 +12,39 @@ Original Repository: [https://github.com/cybledev/odin-sdk-js](https://github.co
 ### For Node.js
 
 <CodeGroup>
-```shell npm
-npm install odin-sdk --save
-```
+  ```shell npm
+  npm install odin-sdk --save
+  ```
 </CodeGroup>
 
 ### For Browser
 
-The library also works in the browser environment via npm and [browserify](http://browserify.org/). After following the above steps with Node.js and installing browserify with `npm install -g browserify`, perform the following (assuming _main.js_ is your entry file):
+The library also works in the browser environment via npm and [browserify](http://browserify.org/). After following the above steps with Node.js and installing browserify with `npm install -g browserify`, perform the following (assuming *main.js* is your entry file):
 
 <CodeGroup>
-```shell Browserify
-browserify main.js > bundle.js
-```
+  ```shell Browserify
+  browserify main.js > bundle.js
+  ```
 </CodeGroup>
 
-Then include _bundle.js_ in the HTML pages.
+Then include *bundle.js* in the HTML pages.
 
 ### Webpack Configuration
 
 Using Webpack you may encounter the following error: "Module not found: Error: Cannot resolve module". Most certainly, you should disable the AMD loader:
 
 <CodeGroup>
-```javascript Webpack Config
-module: {
-  rules: [
-    {
-      parser: {
-        amd: false,
+  ```javascript Webpack Config
+  module: {
+    rules: [
+      {
+        parser: {
+          amd: false,
+        },
       },
-    },
-  ]
-}
-```
+    ]
+  }
+  ```
 </CodeGroup>
 
 ## Getting Started
@@ -52,79 +52,81 @@ module: {
 Please follow the [installation](#installation) instruction and execute the following JS code:
 
 <CodeGroup>
-```javascript Example Usage
-var Odin = require("odin-sdk");
+  ```javascript Example Usage
+  var Odin = require("odin-sdk");
 
-var defaultClient = Odin.ApiClient.instance;
-// Configure API key authorization: ApiKeyAuth
-var ApiKeyAuth = defaultClient.authentications["ApiKeyAuth"];
-ApiKeyAuth.apiKey = "YOUR API KEY";
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKeyAuth.apiKeyPrefix['X-API-Key'] = "Token"
+  var defaultClient = Odin.ApiClient.instance;
+  // Configure API key authorization: ApiKeyAuth
+  var ApiKeyAuth = defaultClient.authentications["ApiKeyAuth"];
+  ApiKeyAuth.apiKey = "YOUR API KEY";
+  // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+  //ApiKeyAuth.apiKeyPrefix['X-API-Key'] = "Token"
 
-// search exposed buckets (using pagination)
-var api = new OdinApis.ExposedBucketsApi();
-var buckets = [];
+  // search exposed buckets (using pagination)
+  var api = new OdinApis.ExposedBucketsApi();
+  var buckets = [];
 
-for (var i = 0; i < 10; i++) {
-  var query = new OdinApis.ExposedCountRequest();
-  query.query = "name:'lit-link-prd.appspot.com'";
+  for (var i = 0; i < 10; i++) {
+    var query = new OdinApis.ExposedCountRequest();
+    query.query = "name:'lit-link-prd.appspot.com'";
+    var callback = function (error, data, response) {
+      if (error) {
+        console.error(error);
+      } else {
+        buckets.push(data);
+      }
+    };
+    api.exposedBucketsCountPost(query, callback);
+    console.log(JSON.stringify(buckets));
+  }
+
+  // search files in a exposed bucket
+  var api = new OdinApis.ExposedFilesApi();
+  var query = {
+    query: "provider: aws",
+    limit: 1,
+    sortDir: "desc",
+    sortBy: "files",
+  };
   var callback = function (error, data, response) {
     if (error) {
       console.error(error);
     } else {
-      buckets.push(data);
+      console.log(JSON.stringify(data));
     }
   };
-  api.exposedBucketsCountPost(query, callback);
-  console.log(JSON.stringify(buckets));
-}
+  api.exposedFilesSearchPost(query, callback);
 
-// search files in a exposed bucket
-var api = new OdinApis.ExposedFilesApi();
-var query = {
-  query: "provider: aws",
-  limit: 1,
-  sortDir: "desc",
-  sortBy: "files",
-};
-var callback = function (error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log(JSON.stringify(data));
-  }
-};
-api.exposedFilesSearchPost(query, callback);
-
-// search hosts
-var api = new OdinApis.ExposedHostsApi();
-var query = {
-  query:
-    '(last_updated_at:["2024-07-08T02:41:15.528Z" TO *] AND services.port:80) OR asn.number:AS63949',
-  limit: 1,
-};
-var callback = function (error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log(JSON.stringify(data));
-  }
-};
-api.exposedHostsSearchPost(query, callback);
-```
+  // search hosts
+  var api = new OdinApis.ExposedHostsApi();
+  var query = {
+    query:
+      '(last_updated_at:["2024-07-08T02:41:15.528Z" TO *] AND services.port:80) OR asn.number:AS63949',
+    limit: 1,
+  };
+  var callback = function (error, data, response) {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(JSON.stringify(data));
+    }
+  };
+  api.exposedHostsSearchPost(query, callback);
+  ```
 </CodeGroup>
 
 ## Authorization
 
 ### API Key Authentication
 
-- **Type**: API key
-- **API key parameter name**: X-API-Key
-- **Location**: HTTP header
+* **Type**: API key
+
+* **API key parameter name**: X-API-Key
+
+* **Location**: HTTP header
 
 <Tip>
-Generate your [Odin API key from the Odin dashboard](https://search.odin.io/account/api-keys).
+  Generate your [Odin API key from the Odin dashboard](https://search.odin.io/account/api-keys).
 </Tip>
 
 ## Support and Contribution
