@@ -89,6 +89,7 @@
     {
       "group": "API",
       "pages": [
+        "api/introduction",
         {
           "group": "Hosts",
           "pages": [
