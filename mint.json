@@ -12,8 +12,8 @@
     "light": "#215FAE",
     "dark": "#215FAE",
     "anchors": {
-      "from": "#215FAE",
-      "to": "#215FAE"
+      "from": "#FF7F57",
+      "to": "#9563FF"
     }
   },
   "topbarLinks": [
@@ -166,5 +166,9 @@
     "medium": "https://medium.com/@OdinThreatIntel",
     "github": "https://github.com/cybledev",
     "linkedin": "https://www.linkedin.com/showcase/odinthreatintel/"
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true
   }
 }

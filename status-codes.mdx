@@ -1,17 +1,18 @@
 ---
 title: Status Codes
+icon: "globe"
 ---
 
 The API may return an HTTP status code and an error message. The following error code is defined:
 
-- <b>Status code "200 OK"</b> indicates a successful request. The server successfully processed the request and returned the data or operation result.
+* <b>Status code "200 OK"</b> indicates a successful request. The server successfully processed the request and returned the data or operation result.
 
-- <b>Status code "400 Bad Request"</b> indicates that the server could not understand the request due to invalid syntax or missing parameters. It implies a client-side error, and the request needs to be modified or corrected before retrying.
+* <b>Status code "400 Bad Request"</b> indicates that the server could not understand the request due to invalid syntax or missing parameters. It implies a client-side error, and the request needs to be modified or corrected before retrying.
 
-- <b>Status code "401 Unauthorised"</b> indicates that the request requires user authentication or valid credentials, and the client attempting the request is not authorised. The user must provide valid credentials (e.g., username and password) to access the requested resource.
+* <b>Status code "401 Unauthorised"</b> indicates that the request requires user authentication or valid credentials, and the client attempting the request is not authorised. The user must provide valid credentials (e.g., username and password) to access the requested resource.
 
-- <b>Status code "408 Request Timeout"</b> indicates that the server did not receive a complete request from the client within the specified time (timeout). It may occur if the client takes too long to send the request and the server closes the connection.
+* <b>Status code "408 Request Timeout"</b> indicates that the server did not receive a complete request from the client within the specified time (timeout). It may occur if the client takes too long to send the request and the server closes the connection.
 
-- <b>Status code "500 Internal Server Error"</b> indicates that the server encountered an unexpected condition that prevented it from fulfilling the request. It is a generic error message that indicates a server-side issue, and the client may need to report the problem to the server administrator or support team.
+* <b>Status code "500 Internal Server Error"</b> indicates that the server encountered an unexpected condition that prevented it from fulfilling the request. It is a generic error message that indicates a server-side issue, and the client may need to report the problem to the server administrator or support team.
 
 If you encounter any other error codes, please check the API documentation or contact our support team for assistance.
