@@ -1,7 +1,7 @@
 {
   "openapi": "openapi.yaml",
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Odin Documentation",
+  "name": "Odin by Cyble Documentation",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
