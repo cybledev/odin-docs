@@ -729,7 +729,7 @@ paths:
       security:
         - ApiKeyAuth: []
       x-codegen-request-body-name: query
-  /v1/fields/exposed/buckets/:
+  /v1/fields/exposed/buckets:
     get:
       tags:
         - Fields
@@ -775,7 +775,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /v1/fields/exposed/files/:
+  /v1/fields/exposed/files:
     get:
       tags:
         - Fields
@@ -819,7 +819,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /v1/fields/hosts/{category}/:
+  /v1/fields/hosts/{category}:
     get:
       tags:
         - Fields
@@ -951,7 +951,7 @@ paths:
       security:
         - ApiKeyAuth: []
       x-codegen-request-body-name: query
-  /v1/hosts/cve/{ip}/:
+  /v1/hosts/cve/{ip}:
     get:
       tags:
         - Hosts
@@ -1043,7 +1043,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
       security:
         - ApiKeyAuth: []
-  /v1/hosts/exploits/{ip}/:
+  /v1/hosts/exploits/{ip}:
     get:
       tags:
         - Hosts
@@ -1273,7 +1273,7 @@ paths:
       security:
         - ApiKeyAuth: []
       x-codegen-request-body-name: query
-  /v1/hosts/{ip}/:
+  /v1/hosts/{ip}:
     get:
       tags:
         - Hosts
