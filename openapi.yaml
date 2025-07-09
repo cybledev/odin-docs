@@ -557,7 +557,7 @@ paths:
     post:
       tags:
         - ExposedBuckets
-      summary: Get Exposed buckets summary
+      summary: Get exposed buckets summary
       description: Get Returns exposed buckets aggregated count according to filters
       requestBody:
         description: Summary Request
@@ -1328,7 +1328,7 @@ paths:
     get:
       tags:
         - Health
-      summary: Health Check
+      summary: Health check
       description: Returns the pong as response
       responses:
         "200":
