@@ -733,10 +733,9 @@ paths:
     get:
       tags:
         - Fields
-      summary: Get the fields for exposed
+      summary: Get the fields for exposed buckets
       description:
         Get the list of fields that can be used to query on exposed buckets
-        and files
       responses:
         "200":
           description: OK
@@ -779,8 +778,8 @@ paths:
     get:
       tags:
         - Fields
-      summary: Get the fields data
-      description: Returns the fields data
+      summary: Get the fields for exposed files
+      description: Returns the exposed files fields data
       responses:
         "200":
           description: OK
